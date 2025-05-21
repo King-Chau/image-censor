@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ImageCensor {
     private static final String INPUT_OP_NAME = "input_1";
@@ -15,8 +17,14 @@ public class ImageCensor {
     private static final String[] CLASSES = {"Drawing", "Hentai", "Neutral", "Porn", "Sexy"};
     private static final int IMAGE_SIZE = 299;
 
-    public static void main(String[] args) throws Exception {
-        String imagePath = "images/porn.png";
+    /**
+     * nsfw image classification
+     */
+    public static Map<String, Float> predict(String imagePath) throws Exception {
+        File imgFile = new File(imagePath);
+        if (!imgFile.exists() || !imgFile.isFile()) {
+            throw new IllegalArgumentException("无效图片路径: " + imagePath);
+        }
 
         float[][][][] inputData = preprocessImage(imagePath);
 
@@ -30,19 +38,18 @@ public class ImageCensor {
 
                 float[] probabilities = processOutput(outputTensor);
                 printResults(probabilities);
+                return mapLabels(probabilities);
             }
         }
     }
 
-    public static TFloat32 createInputTensor(float[][][][] inputData, int imageSize) {
+    private static TFloat32 createInputTensor(float[][][][] inputData, int imageSize) {
         TFloat32 tensor = TFloat32.tensorOf(Shape.of(1, imageSize, imageSize, 3));
-        var data = tensor;
-
         for (int b = 0; b < 1; b++) {
             for (int y = 0; y < imageSize; y++) {
                 for (int x = 0; x < imageSize; x++) {
                     for (int c = 0; c < 3; c++) {
-                        data.setFloat(inputData[b][y][x][c], b, y, x, c);
+                        tensor.setFloat(inputData[b][y][x][c], b, y, x, c);
                     }
                 }
             }
@@ -52,28 +59,36 @@ public class ImageCensor {
 
     private static float[] processOutput(Tensor outputTensor) {
         if (!(outputTensor instanceof TFloat32)) {
-            throw new IllegalStateException("Unexpected output type: " + outputTensor.getClass());
+            throw new IllegalStateException("输出类型错误: " + outputTensor.getClass());
         }
+
         TFloat32 floatTensor = (TFloat32) outputTensor;
         Shape shape = floatTensor.shape();
         if (shape.numDimensions() != 2 || shape.size(0) != 1 || shape.size(1) != CLASSES.length) {
-            throw new IllegalStateException("Unexpected output shape: " + shape);
+            throw new IllegalStateException("输出维度不符: " + shape);
         }
 
         float[] results = new float[CLASSES.length];
-        var data = floatTensor;
-
         for (int i = 0; i < CLASSES.length; i++) {
-            results[i] = data.getFloat(0, i);
+            results[i] = floatTensor.getFloat(0, i);
         }
         return results;
     }
 
     private static void printResults(float[] probabilities) {
-        System.out.println("NSFW Prediction:");
+        System.out.println("📊 预测结果:");
+        int maxIdx = 0;
+        float maxProb = probabilities[0];
+
         for (int i = 0; i < CLASSES.length; i++) {
             System.out.printf(" - %-8s: %.4f%n", CLASSES[i], probabilities[i]);
+            if (probabilities[i] > maxProb) {
+                maxProb = probabilities[i];
+                maxIdx = i;
+            }
         }
+
+        System.out.println("✅ 最终判断: " + CLASSES[maxIdx]);
     }
 
     private static float[][][][] preprocessImage(String path) throws Exception {
@@ -89,11 +104,24 @@ public class ImageCensor {
         for (int y = 0; y < IMAGE_SIZE; y++) {
             for (int x = 0; x < IMAGE_SIZE; x++) {
                 int rgb = resized.getRGB(x, y);
-                result[0][y][x][0] = ((rgb >> 16) & 0xFF) / 255.0f; // R
-                result[0][y][x][1] = ((rgb >> 8) & 0xFF) / 255.0f;  // G
-                result[0][y][x][2] = (rgb & 0xFF) / 255.0f;         // B
+                result[0][y][x][0] = ((rgb >> 16) & 0xFF) / 255.0f;
+                result[0][y][x][1] = ((rgb >> 8) & 0xFF) / 255.0f;
+                result[0][y][x][2] = (rgb & 0xFF) / 255.0f;
             }
         }
         return result;
+    }
+
+    private static Map<String, Float> mapLabels(float[] probabilities) {
+        Map<String, Float> result = new LinkedHashMap<>();
+        for (int i = 0; i < CLASSES.length; i++) {
+            result.put(CLASSES[i], probabilities[i]);
+        }
+        return result;
+    }
+
+    public static void main(String[] args) throws Exception {
+        String imagePath = "images/porn.png";
+        predict(imagePath);
     }
 }
