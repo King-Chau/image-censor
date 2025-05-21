@@ -21,15 +21,5 @@
             <version>1.0.0</version>
         </dependency>
     </dependencies>
-    <repositories>
-        <repository>
-            <id>aliyun-central</id>
-            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
 
 </project>

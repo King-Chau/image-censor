@@ -2,7 +2,7 @@
 
 ## 📌 项目简介 | Project Description
 
-**Image Censor** 是一个使用 **TensorFlow Java API (2.x)** 实现的图像内容审核工具，支持识别以下 5 类 NSFW 内容：
+**Image Censor** 是一个使用 **TensorFlow Java API (2.x)** 实现的纯Java图像内容审核工具，支持识别以下 5 类 NSFW 内容：
 
 - Drawing（漫画/绘画）
 - Hentai（二次元色情）
@@ -11,7 +11,7 @@
 - Sexy（性感）
 
 适用于图片智能审核场景，可作为人工智能内容风控系统的模型调用模块。
-虽然模型并非完美，但准确率可达约 93%。
+内置模型并非完美，但准确率可达约 93%。
 ---
 
 **Image Censor** is an NSFW (Not Safe For Work) image classification project built with **TensorFlow Java API (2.x)**. It supports detection of the following 5 classes:
@@ -50,11 +50,11 @@ It is NOT perfect, but it's pretty accurate (~93% with midsized model)
 
 ## 🧩 项目依赖 | Dependencies
 
-| 名称 | 说明 |
-|------|------|
-| Java | 11 或更高版本 |
-| TensorFlow Java | 推荐使用 `org.tensorflow:tensorflow-core-platform:0.4.0` |
-| 图像处理 | Java 标准库 `javax.imageio`、`BufferedImage` |
+| 名称 | 说明                                                   |
+|------|------------------------------------------------------|
+| Java | 11 或更高版本                                             |
+| TensorFlow Java | 推荐使用 `org.tensorflow:tensorflow-core-platform:1.0.0` |
+| 图像处理 | Java 标准库 `javax.imageio`、`BufferedImage`             |
 
 ---
 
