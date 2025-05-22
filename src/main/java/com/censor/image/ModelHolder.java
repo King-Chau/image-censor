@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 public class ModelHolder {
     private static volatile Graph graph;
     private static volatile Session session;
-    private static final String PB_PATH = "models/nsfw.299x299.pb";
+    private static final String PB_PATH = "models/nsfw_mobilenet.pb";
 
     private ModelHolder() {  }
 

@@ -11,7 +11,7 @@
 - Sexy（性感）
 
 适用于图片智能审核场景，可作为人工智能内容风控系统的模型调用模块。
-内置模型并非完美，但准确率可达约 93%。
+内置Mobilenet模型并非完美，但准确率可达约 93%。
 ---
 
 **Image Censor** is an NSFW (Not Safe For Work) image classification project built with **TensorFlow Java API (2.x)**. It supports detection of the following 5 classes:
@@ -61,7 +61,7 @@ It is NOT perfect, but it's pretty accurate (~93% with midsized model)
 
 ## 💡 模型说明 | Model Info
 
-> 本项目使用的模型结构基于 [InceptionV3](https://github.com/GantMan/nsfw_model/tree/master)，输入尺寸为 299x299
+> 本项目使用的模型结构基于 [Mobilenet](https://github.com/GantMan/nsfw_model/tree/master)，输入尺寸为 244x244
 
 ---
 

@@ -15,7 +15,7 @@ public class ImageCensor {
     private static final String INPUT_OP_NAME = "input_1";
     private static final String OUTPUT_OP_NAME = "dense_3/Softmax";
     private static final String[] CLASSES = {"Drawing", "Hentai", "Neutral", "Porn", "Sexy"};
-    private static final int IMAGE_SIZE = 299;
+    private static final int IMAGE_SIZE = 244;
 
     /**
      * nsfw image classification
@@ -136,5 +136,6 @@ public class ImageCensor {
             long cost = System.currentTimeMillis() - start;
             System.out.println("耗时: " + cost + "ms");
         }
+        ModelHolder.close();
     }
 }
