@@ -73,7 +73,7 @@ ModelHolder.close();
 
 ## 💡 模型说明 | Model Info
 
-> 本项目使用的模型结构基于 [Mobilenet](https://github.com/GantMan/nsfw_model/tree/master)，输入尺寸为 244x244
+> 本项目使用的模型结构基于 [InceptionV3](https://github.com/GantMan/nsfw_model/tree/master)，输入尺寸为 299x299
 
 ---
 
