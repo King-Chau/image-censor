@@ -1,7 +1,8 @@
-![NSFWJava.png](images/NSFWJava.png)
+<img src="images/NSFWJava.png" alt="NSFWJava" width="500" height="300" />
+
 # 🖼️ NSFW Java - NSFW 图像分类（基于 TensorFlow Java）
 
-## 📌 项目简介 | Project Description
+## 📌 项目简介 | Project Descriptio``n
 
 **NSFW Java** 是一个使用 **TensorFlow Java API (2.x)** 实现的纯Java图像内容审核工具，支持识别以下 5 类 NSFW 内容：
 
