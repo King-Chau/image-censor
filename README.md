@@ -57,6 +57,16 @@ It is NOT perfect, but it's pretty accurate (~93% with midsized model)
 | 图像处理 | Java 标准库 `javax.imageio`、`BufferedImage`             |
 
 ---
+## 调用方式 | API Usage
+
+```java
+Map<String, Float> result = ImageCensor.predict("image.jpg");
+```
+ 关闭资源 | Shutdown  完成预测后，调用：
+
+```java
+ModelHolder.close();
+```
 
 
 ## 💡 模型说明 | Model Info
