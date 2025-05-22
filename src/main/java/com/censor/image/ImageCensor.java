@@ -121,7 +121,20 @@ public class ImageCensor {
     }
 
     public static void main(String[] args) throws Exception {
-        String imagePath = "images/porn.png";
-        predict(imagePath);
+        String[] images = {
+                "images/drawing.png",
+                "images/hentai.jpeg",
+                "images/neutral.jpeg",
+                "images/porn.jpeg",
+                "images/sexy.png"
+        };
+        for (String image : images) {
+            System.out.println("----------------");
+            System.out.println("image: " + image);
+            long start = System.currentTimeMillis();
+            predict(image);
+            long cost = System.currentTimeMillis() - start;
+            System.out.println("耗时: " + cost + "ms");
+        }
     }
 }
