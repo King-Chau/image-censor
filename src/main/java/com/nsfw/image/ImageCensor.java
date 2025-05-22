@@ -1,4 +1,4 @@
-package com.censor.image;
+package com.nsfw.image;
 
 import org.tensorflow.Tensor;
 import org.tensorflow.ndarray.Shape;

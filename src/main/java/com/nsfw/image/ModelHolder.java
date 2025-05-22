@@ -1,4 +1,4 @@
-package com.censor.image;
+package com.nsfw.image;
 
 import org.tensorflow.Graph;
 import org.tensorflow.Session;
