@@ -13,7 +13,7 @@
 - Sexy（性感）
 
 适用于图片智能审核场景，可作为人工智能内容风控系统的模型调用模块。
-内置Mobilenet模型并非完美，但准确率可达约 93%。
+内置Mobilenet模型并非完美，但准确率可达约 93%。试用：[nsfw-java](http://oujingzhou.com/)
 ---
 
 **NSFW Java** is an NSFW (Not Safe For Work) image classification project built with **TensorFlow Java API (2.x)**. It supports detection of the following 5 classes:
@@ -25,7 +25,7 @@
 - Sexy
 
 This tool is ideal for automated image moderation and can be integrated into AI-based content filtering pipelines.
-It is NOT perfect, but it's pretty accurate (~93% with midsized model)
+It is NOT perfect, but it's pretty accurate (~93% with midsized model). Try it：[nsfw-java](http://oujingzhou.com/)
 
 ---
 
