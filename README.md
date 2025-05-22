@@ -2,7 +2,7 @@
 
 # 🖼️ NSFW Java - NSFW 图像分类（基于 TensorFlow Java）
 
-## 📌 项目简介 | Project Descriptio``n
+## 📌 简介 | Description
 
 **NSFW Java** 是一个使用 **TensorFlow Java API (2.x)** 实现的纯Java图像内容审核工具，支持识别以下 5 类 NSFW 内容：
 
