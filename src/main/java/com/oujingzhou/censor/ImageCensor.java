@@ -1,4 +1,4 @@
-package com.nsfw.image;
+package com.oujingzhou.censor;
 
 import org.tensorflow.Tensor;
 import org.tensorflow.ndarray.Shape;
@@ -7,11 +7,12 @@ import org.tensorflow.types.TFloat32;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.Closeable;
 import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ImageCensor {
+public class ImageCensor implements Closeable {
     private static final String INPUT_OP_NAME = "input_1";
     private static final String OUTPUT_OP_NAME = "dense_3/Softmax";
     private static final String[] CLASSES = {"Drawing", "Hentai", "Neutral", "Porn", "Sexy"};
@@ -20,7 +21,7 @@ public class ImageCensor {
     /**
      * nsfw image classification
      */
-    public static Map<String, Float> predict(String imagePath) throws Exception {
+    public Map<String, Float> predict(String imagePath) throws Exception {
         File imgFile = new File(imagePath);
         if (!imgFile.exists() || !imgFile.isFile()) {
             throw new IllegalArgumentException("无效图片路径: " + imagePath);
@@ -41,6 +42,11 @@ public class ImageCensor {
                 return mapLabels(probabilities);
             }
         }
+    }
+
+    @Override
+    public void close() {
+        ModelHolder.close();
     }
 
     private static TFloat32 createInputTensor(float[][][][] inputData, int imageSize) {
@@ -118,24 +124,5 @@ public class ImageCensor {
             result.put(CLASSES[i], probabilities[i]);
         }
         return result;
-    }
-
-    public static void main(String[] args) throws Exception {
-        String[] images = {
-                "images/drawing.png",
-                "images/hentai.jpeg",
-                "images/neutral.jpeg",
-                "images/porn.jpeg",
-                "images/sexy.png"
-        };
-        for (String image : images) {
-            System.out.println("----------------");
-            System.out.println("image: " + image);
-            long start = System.currentTimeMillis();
-            predict(image);
-            long cost = System.currentTimeMillis() - start;
-            System.out.println("耗时: " + cost + "ms");
-        }
-        ModelHolder.close();
     }
 }

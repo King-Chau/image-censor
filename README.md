@@ -60,14 +60,24 @@ It is NOT perfect, but it's pretty accurate (~93% with midsized model). Try it�
 
 ---
 ## 调用方式 | API Usage
+```
+<dependency>
+    <groupId>com.oujingzhou</groupId>
+    <artifactId>nsfw-java</artifactId>
+    <version>0.1.0</version>
+</dependency>
+```
 
 ```java
-Map<String, Float> result = ImageCensor.predict("image.jpg");
+import com.oujingzhou.censor.ImageCensor;
+
+ImageCensor imageCensor = new ImageCensor();
+imageCensor.predict("image.jpg");
 ```
  关闭资源 | Shutdown  完成预测后，调用：
 
 ```java
-ModelHolder.close();
+imageCensor.close();
 ```
 
 

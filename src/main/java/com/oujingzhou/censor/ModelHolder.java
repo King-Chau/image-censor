@@ -1,11 +1,10 @@
-package com.nsfw.image;
+package com.oujingzhou.censor;
 
 import org.tensorflow.Graph;
 import org.tensorflow.Session;
 import org.tensorflow.proto.GraphDef;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStream;
 
 /**
  * load TensorFlow GraphDef (.pb)
@@ -13,7 +12,7 @@ import java.nio.file.Paths;
 public class ModelHolder {
     private static volatile Graph graph;
     private static volatile Session session;
-    private static final String PB_PATH = "models/nsfw.299x299.pb";
+    private static final String PB_PATH = "/models/nsfw.299x299.pb";
 
     private ModelHolder() {  }
 
@@ -24,16 +23,20 @@ public class ModelHolder {
         if (session == null) {
             synchronized (ModelHolder.class) {
                 if (session == null) {
-                    try {
-                        byte[] graphBytes = Files.readAllBytes(Paths.get(PB_PATH));
+                    try (InputStream modelStream = ModelHolder.class.getResourceAsStream(PB_PATH)) {
+                        if (modelStream == null) {
+                            throw new RuntimeException("无法找到模型资源: /models/nsfw_model.pb");
+                        }
+
+                        byte[] graphBytes = modelStream.readAllBytes();
                         GraphDef graphDef = GraphDef.parseFrom(graphBytes);
 
                         graph = new Graph();
                         graph.importGraphDef(graphDef);
                         session = new Session(graph);
-                        System.out.println(".pb 模型已加载: " + PB_PATH);
+                        System.out.println(".pb 模型已加载（资源路径）");
                     } catch (Exception e) {
-                        throw new RuntimeException("加载 .pb 模型失败: " + PB_PATH, e);
+                        throw new RuntimeException("加载 .pb 模型失败（资源路径）", e);
                     }
                 }
             }
