@@ -34,7 +34,6 @@ public class ModelHolder {
                         graph = new Graph();
                         graph.importGraphDef(graphDef);
                         session = new Session(graph);
-                        System.out.println(".pb 模型已加载（资源路径）");
                     } catch (Exception e) {
                         throw new RuntimeException("加载 .pb 模型失败（资源路径）", e);
                     }
@@ -53,7 +52,6 @@ public class ModelHolder {
             graph.close();
             session = null;
             graph = null;
-            System.out.println(".pb 模型已关闭");
         }
     }
 }

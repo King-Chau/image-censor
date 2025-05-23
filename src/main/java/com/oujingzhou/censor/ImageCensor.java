@@ -38,7 +38,6 @@ public class ImageCensor implements Closeable {
                     .get(0)) {
 
                 float[] probabilities = processOutput(outputTensor);
-                printResults(probabilities);
                 return mapLabels(probabilities);
             }
         }
@@ -79,22 +78,6 @@ public class ImageCensor implements Closeable {
             results[i] = floatTensor.getFloat(0, i);
         }
         return results;
-    }
-
-    private static void printResults(float[] probabilities) {
-        System.out.println("📊 预测结果:");
-        int maxIdx = 0;
-        float maxProb = probabilities[0];
-
-        for (int i = 0; i < CLASSES.length; i++) {
-            System.out.printf(" - %-8s: %.4f%n", CLASSES[i], probabilities[i]);
-            if (probabilities[i] > maxProb) {
-                maxProb = probabilities[i];
-                maxIdx = i;
-            }
-        }
-
-        System.out.println("✅ 最终判断: " + CLASSES[maxIdx]);
     }
 
     private static float[][][][] preprocessImage(String path) throws Exception {
